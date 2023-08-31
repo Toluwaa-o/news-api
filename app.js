@@ -12,10 +12,11 @@ const app = express();
 
 app.use(morgan("tiny"));
 
+app.use("/my-news-api/v1", NewsRoutes);
+
 app.use(errorHandler);
 app.use(notFound);
 
-app.use("/my-news-api/v1", NewsRoutes);
 const port = process.env.PORT || 3000;
 
 const start = async () => {
