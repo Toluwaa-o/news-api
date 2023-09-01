@@ -1,4 +1,4 @@
-const fetch = require('node-fetch')
+const axios = require("axios");
 
 const getNews = async (req, res) => {
   const { q } = req.query;
@@ -11,11 +11,10 @@ const getNews = async (req, res) => {
     ? `https://newsapi.org/v2/everything?apiKey=${process.env.API_KEY}&q=${q}`
     : `https://newsapi.org/v2/everything?apiKey=${process.env.API_KEY}&q=a`;
 
-  const response = await fetch(url);
-  const news = await response.json();
-  const result = news.articles.splice(+page - 1, 10);
+  const news = await axios.get(url);
+  const result = news.data.articles.splice(+page - 1, 10);
 
-  return res.json({ news, result });
+  return res.json({ news: news.data, result });
 };
 
 const getCountryHeadlines = async (req, res) => {
@@ -29,11 +28,11 @@ const getCountryHeadlines = async (req, res) => {
     ? `https://newsapi.org/v2/top-headlines?apiKey=${process.env.API_KEY}&country=${country}`
     : `https://newsapi.org/v2/top-headlines?apiKey=${process.env.API_KEY}&country=country`;
 
-  const response = await fetch(url);
-  const news = await response.json();
-  const result = news.articles.splice(+page - 1, 10);
+  const news = await fetch(url);
 
-  return res.json({ news, result });
+  const result = news.data.articles.splice(+page - 1, 10);
+
+  return res.json({ news: news.data, result });
 };
 
 module.exports = { getNews, getCountryHeadlines };
