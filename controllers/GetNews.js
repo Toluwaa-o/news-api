@@ -14,7 +14,7 @@ const getNews = async (req, res) => {
   const news = await axios.get(url);
   const result = news.data.articles.splice(+page - 1, 10);
 
-  return res.json({ news: news.data, result });
+  return res.json({ result });
 };
 
 const getCountryHeadlines = async (req, res) => {
