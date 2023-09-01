@@ -1,3 +1,5 @@
+const fetch = require('node-fetch')
+
 const getNews = async (req, res) => {
   const { q } = req.query;
 
